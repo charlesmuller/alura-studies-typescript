@@ -16,6 +16,22 @@ function App() {
       selecionado: tarefa.id === tarefaSelecionada.id ? true : false
     })));
   }
+
+  function fimTarefa(){
+    if(selecionado){
+      setSelecionado(undefined);
+      setTarefas(tarefasAnt => tarefasAnt.map(tarefa => {
+        if(tarefa.id === selecionado.id){
+          return {
+            ...tarefa,
+            selecionado: false,
+            completado: true
+          }
+        }
+        return tarefa;
+      }))
+    }
+  }
   return (
      <div className={style.AppStyle}>
        <Formulario setTarefas={setTarefas} />
@@ -23,7 +39,10 @@ function App() {
        tarefas={tarefas} 
        selecTarefa={selecTarefa}
        />
-       <Cronometro selecionado={selecionado}/>
+       <Cronometro 
+          selecionado={selecionado}
+          fimTarefa={fimTarefa}
+       />
      </div>
   )
  }
